@@ -11,15 +11,30 @@ require("mason-lspconfig").setup({
 
 require("mason-lspconfig").setup_handlers({
   function(server_name)
-    require("lspconfig")[server_name].setup({
-      capabilities = require("cmp_nvim_lsp").default_capabilities(),
-      settings = {
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+    local config = {
+      capabilities = capabilities,
+      on_attach = function(client, bufnr) end,
+    }
+
+    if server_name == "lua_ls" then
+      config.settings = {
         Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          },
+          diagnostics = { globals = { "vim" } },
         },
-      },
-    })
+      }
+    end
+
+    if server_name == "intelephense" then
+      config.init_options = {
+        format = {
+          enable = false,
+        },
+      }
+    end
+
+    vim.lsp.config[server_name] = config
+    vim.lsp.enable(server_name)
   end,
 })

@@ -23,8 +23,8 @@ local opts = {
       disabled_plugins = {
         "gzip",
         "health",
-        -- "matchit",
-        -- "matchparen",
+        "matchit",
+        "matchparen",
         "netrwPlugin",
         "rplugin",
         "shada",
