@@ -17,7 +17,6 @@ if vim.g.vscode then
   map("n", "<leader>h", "<cmd>call VSCodeNotify('workbench.action.focusLeftGroup')<CR>", opt)
   map("n", "<leader>v", "<cmd>call VSCodeNotify('workbench.action.splitEditorRight')<CR>", opt)
   map("n", "<leader>s", "<cmd>call VSCodeNotify('workbench.action.splitEditorDown')<CR>", opt)
-  map("n", "gd", "*", opt)
 else
   -- ESC
   map("i", "jj", "<ESC>", opt)
@@ -36,13 +35,13 @@ else
 
   -- LSP
   map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opt)
-  map("n", "gf", "<cmd>lua vim.lsp.buf.format()<CR>", opt)
+  map("n", "<A-f>", "<cmd>lua vim.lsp.buf.format()<CR>", opt)
   map("n", "<C-]>", "<cmd>lua vim.lsp.buf.definition()<CR>", opt)
   map("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opt)
   map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opt)
   map("n", "ge", "<cmd>lua vim.diagnostic.open_float()<CR>", opt)
-  map("n", "g]", "<cmd>lua vim.diagnostic.goto_next()<CR>", opt)
-  map("n", "g[", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opt)
+  map("n", "<leader>)", "<cmd>lua vim.diagnostic.goto_next()<CR>", opt)
+  map("n", "<leader>(", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opt)
 
   -- fzf
   vim.cmd([[
