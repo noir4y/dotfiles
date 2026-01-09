@@ -27,9 +27,11 @@ require("mason-lspconfig").setup_handlers({
     end
 
     if server_name == "intelephense" then
-      config.init_options = {
-        format = {
-          enable = false,
+      config.settings = {
+        intelephense = {
+          format = {
+            enable = false,
+          },
         },
       }
     end

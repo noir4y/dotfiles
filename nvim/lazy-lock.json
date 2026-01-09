@@ -38,5 +38,6 @@
   "telescope-dap.nvim": { "branch": "master", "commit": "783366bd6c1e7fa0a5c59c07db37f49c805a28df" },
   "telescope.nvim": { "branch": "master", "commit": "3f8109cd21abe9fdb274a09da1e3c176673254b4" },
   "vim-commentary": { "branch": "master", "commit": "64a654ef4a20db1727938338310209b6a63f60c9" },
+  "vimdoc-ja": { "branch": "master", "commit": "5211c381bdbea3008209ca0abc07f1e2e9246bf7" },
   "winresizer": { "branch": "master", "commit": "9bd559a03ccec98a458e60c705547119eb5350f3" }
 }

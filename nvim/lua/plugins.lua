@@ -84,6 +84,14 @@ return {
     end,
   },
 
+  -- Vimdoc
+  {
+    "vim-jp/vimdoc-ja",
+    keys = {
+      { "h", mode = "c" },
+    },
+  },
+
   -- Comment Out
   {
     "tpope/vim-commentary",
@@ -100,7 +108,7 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     version = "^1.0.0",
-    event = { "BufRead", "BufNewFile" },
+    event = { "VimEnter" },
     dependencies = {
       "neovim/nvim-lspconfig",
     },
@@ -175,7 +183,7 @@ return {
     opts = {
       suggestion = { enabled = true },
       panel = { enabled = false },
-    }
+    },
   },
 
   {
