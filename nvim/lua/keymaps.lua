@@ -20,7 +20,6 @@ if vim.g.vscode then
 else
   -- ESC
   map("i", "jj", "<ESC>", opt)
-  map("i", "ｊｊ", "<ESC>", opt)
   map("n", "<Esc><Esc>", ":<C-u>nohl<CR>", opt)
 
   -- Split window
@@ -59,7 +58,7 @@ else
   map("n", "<C-n>", "<cmd>bnext<CR>", opt)
 
   -- Filetree
-  map("n", "<leader>t", "<cmd>NvimTreeToggle<CR>", opt)
+  map("n", "<leader>ft", "<cmd>NvimTreeToggle<CR>", opt)
 
   -- WindowResize
   vim.g["winresizer_start_key"] = "<Leader>w"

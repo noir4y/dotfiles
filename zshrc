@@ -1,22 +1,28 @@
-# -------------------------# =========================================
 # Powerlevel10k instant prompt (must stay near the top)
-# =========================================
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# =========================================
 # Oh My Zsh
-# ========================================
+typeset -U path
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(gitfast web-search zsh-autosuggestions zsh-completions)
-source $ZSH/oh-my-zsh.sh
+
+if [[ -d /opt/homebrew/share/zsh-completions ]]; then
+  fpath=(/opt/homebrew/share/zsh-completions $fpath)
+fi
+
+plugins=(gitfast web-search zsh-autosuggestions zsh-syntax-highlighting)
+
+if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
+  source "$ZSH/oh-my-zsh.sh"
+fi
+
+autoload -Uz compinit
+compinit
 
 # Basic Setup
-# --------------------------
 export LANG=en_US.UTF-8
-export HISTTIMEFORMAT="[%F %T] "
 export EDITOR=nvim
 export VISUAL=nvim
 
@@ -26,9 +32,7 @@ autoload -Uz select-word-style
 select-word-style default
 bindkey -e
 
-# --------------------------
 # History
-# --------------------------
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=500000
 SAVEHIST=500000
@@ -41,45 +45,16 @@ setopt \
   hist_find_no_dups\
   hist_save_no_dups
 
-# --------------------------
-# Prompt
-# --------------------------
-# PROMPT="%F{blue}%n%f:%c/ %# "
-
-# --------------------------
 # Completion
-# --------------------------
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' ignore-parents parent pwd ..
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
 zstyle ':completion:*:processes' command 'ps x -o pid,s,args'
 
-autoload -Uz compinit
-if [[ -f "$HOME/.zcompdump" && "$HOME/.zcompdump" -nt "$HOME/.zshrc" ]]; then
-  compinit -C
-else
-  compinit
-fi
-
-# --------------------------
-# vcs_info
-# --------------------------
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' formats '%F{green}(%s)-[%b]%f'
-zstyle ':vcs_info:*' actionformats '%F{red}(%s)-[%b|%a]%f'
-function _update_vcs_info_msg() { LANG=en_US.UTF-8 vcs_info; RPROMPT="${vcs_info_msg_0_}"; }
-
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd _update_vcs_info_msg
-
-# --------------------------
 # Key Bindings
-# --------------------------
 bindkey '^R' history-incremental-pattern-search-backward
 
-# --------------------------
 # Alias
-# --------------------------
 alias vi='nvim'
 alias vim='nvim'
 alias l='ls -CF'
@@ -114,14 +89,11 @@ alias dcd='docker compose down'
 # PHPStan
 alias phpstan='vendor/bin/phpstan analyse'
 
-# --------------------------
 # OS Settings
-# --------------------------
 case ${OSTYPE} in
   darwin*)
     export CLICOLOR=1
     alias ls='ls -G -F'
-    [[ -d /opt/homebrew/bin ]] && path=(/opt/homebrew/bin $path)
     ;;
   linux*)
     alias ls='ls -F --color=auto'
@@ -148,10 +120,7 @@ if type fzf >/dev/null 2>&1; then
   done
 fi
 
-# --------------------------
 # Neovim
-# --------------------------
-typeset -U path
 PATH_DIRS=(
   /opt/homebrew/bin
   /opt/nvim-linux-x86_64/bin
@@ -160,10 +129,5 @@ for dir in "${PATH_DIRS[@]}"; do
   [[ -d $dir ]] && path=($dir $path)
 done
 
-# =========================================
-# Powerlevel10k prompt
-# =========================================
-[[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh

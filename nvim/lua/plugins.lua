@@ -84,12 +84,24 @@ return {
     end,
   },
 
-  -- Vimdoc
+  -- Translate
   {
     "vim-jp/vimdoc-ja",
     keys = {
       { "h", mode = "c" },
     },
+  },
+
+  {
+    "noir4y/comment-translate.nvim",
+    event = { "BufRead", "BufNewFile" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("settings.translate")
+    end,
   },
 
   -- Comment Out
