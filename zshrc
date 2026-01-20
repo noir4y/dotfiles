@@ -100,9 +100,7 @@ case ${OSTYPE} in
     ;;
 esac
 
-# --------------------------
 # fzf
-# --------------------------
 if type fzf >/dev/null 2>&1; then
   export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
   if [[ "$(uname)" == "Darwin" ]]; then
