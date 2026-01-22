@@ -6,20 +6,31 @@ fi
 # Oh My Zsh
 typeset -U path
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+
+plugins=(
+  git
+  docker
+  docker-compose
+  extract
+  npm
+)
 
 if [[ -d /opt/homebrew/share/zsh-completions ]]; then
   fpath=(/opt/homebrew/share/zsh-completions $fpath)
 fi
 
-plugins=(gitfast web-search zsh-autosuggestions zsh-syntax-highlighting)
-
-if [[ -f "$ZSH/oh-my-zsh.sh" ]]; then
-  source "$ZSH/oh-my-zsh.sh"
-fi
-
-autoload -Uz compinit
+autoload -U compinit
 compinit
+source "$ZSH/oh-my-zsh.sh"
+
+# Homebrew plugins
+for f in \
+  /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme \
+  /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+do
+  [[ -r $f ]] && source $f
+done
 
 # Basic Setup
 export LANG=en_US.UTF-8
