@@ -1,42 +1,48 @@
-require("mason").setup({
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+mason.setup({
   ui = {
     check_outdated_packages_on_open = false,
     border = "single",
   },
 })
 
-require("mason-lspconfig").setup({
+local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+local function common_on_attach(client, bufnr)
+  if client.name == "intelephense" then
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end
+end
+
+vim.lsp.config["lua_ls"] = {
+  capabilities = capabilities,
+  on_attach = common_on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+    },
+  },
+}
+
+vim.lsp.config["intelephense"] = {
+  capabilities = capabilities,
+  on_attach = common_on_attach,
+  settings = {
+    intelephense = {
+      format = {
+        enable = false,
+      },
+    },
+  },
+}
+
+mason_lspconfig.setup({
   ensure_installed = { "lua_ls", "intelephense" },
-})
-
-require("mason-lspconfig").setup_handlers({
-  function(server_name)
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-    local config = {
-      capabilities = capabilities,
-      on_attach = function(client, bufnr) end,
-    }
-
-    if server_name == "lua_ls" then
-      config.settings = {
-        Lua = {
-          diagnostics = { globals = { "vim" } },
-        },
-      }
-    end
-
-    if server_name == "intelephense" then
-      config.settings = {
-        intelephense = {
-          format = {
-            enable = false,
-          },
-        },
-      }
-    end
-
-    vim.lsp.config[server_name] = config
-    vim.lsp.enable(server_name)
-  end,
+  automatic_enable = true,
 })

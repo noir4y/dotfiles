@@ -149,8 +149,8 @@ return {
     "jay-babu/mason-null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
+      "williamboman/mason.nvim",
       "nvimtools/none-ls.nvim",
-      "nvim-lua/plenary.nvim",
     },
     config = function()
       require("settings.null-ls")
