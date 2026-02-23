@@ -1,27 +1,33 @@
 require('comment-translate').setup({
-  target_language = 'ja',       -- Target language (default: auto-detected from system locale, fallback 'en')
-  translate_service = 'google', -- Currently only 'google' is supported
+  target_language = 'ja',
+  translate_service = 'google', -- 'google' or 'llm'
   hover = {
-    enabled = true,             -- Enable hover translation
-    delay = 500,                -- Additional delay (ms) after CursorHold before showing hover
-    auto = false,               -- If false, disable auto-hover and use explicit keymap
+    enabled = true,
+    delay = 500,
+    auto = false,
   },
   immersive = {
-    enabled = false, -- Enable immersive translation on startup
+    enabled = false,
   },
   cache = {
-    enabled = true,     -- Enable translation cache
-    max_entries = 1000, -- Maximum cache entries
+    enabled = true,
+    max_entries = 1000,
   },
-  max_length = 5000,    -- Maximum translation text length
+  max_length = 5000,
   targets = {
-    comment = true,     -- Include comments as translation targets
-    string = true,      -- Include strings as translation targets
+    comment = true,
+    string = true,
   },
+  -- llm = {
+  --   provider = 'ollama', -- 'openai' | 'anthropic' | 'gemini' | 'ollama'
+  --   api_key = nil,
+  --   model = 'translategemma:4b',
+  --   timeout = 20,
+  -- },
   keymaps = {
-    hover = '<leader>th',        -- Hover translation
-    hover_manual = '<leader>tc', -- Manual hover trigger (when auto is disabled)
-    replace = '<leader>tr',      -- Replace selected text with translation
-    toggle = '<leader>tt',       -- Toggle immersive translation ON/OFF (global)
+    hover = '<leader>th',
+    hover_manual = '<leader>tc',
+    replace = '<leader>tr',
+    toggle = '<leader>tt',
   },
 })

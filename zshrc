@@ -91,6 +91,7 @@ alias gcm='git commit'
 alias gps='git push'
 alias gmg='git merge'
 alias gdf='git diff'
+alias lg='lazygit'
 
 # Docker
 alias dc='docker compose'
@@ -133,6 +134,8 @@ fi
 PATH_DIRS=(
   /opt/homebrew/bin
   /opt/nvim-linux-x86_64/bin
+  $HOME/.local/bin
+  $HOME/.local/share/nvim/mason/bin
 )
 for dir in "${PATH_DIRS[@]}"; do
   [[ -d $dir ]] && path=($dir $path)
