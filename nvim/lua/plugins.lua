@@ -8,6 +8,16 @@ return {
     end,
   },
 
+  -- Dashboard
+  {
+    "nvimdev/dashboard-nvim",
+    event = "VimEnter",
+    config = function()
+      require("settings.dashboard")
+    end,
+    dependencies = { { "nvim-tree/nvim-web-devicons" } },
+  },
+
   -- Syntax Highlighting
   {
     "nvim-treesitter/nvim-treesitter",
@@ -85,13 +95,6 @@ return {
   },
 
   -- Translate
-  {
-    "vim-jp/vimdoc-ja",
-    keys = {
-      { "h", mode = "c" },
-    },
-  },
-
   {
     "noir4y/comment-translate.nvim",
     event = { "BufRead", "BufNewFile" },
@@ -195,87 +198,6 @@ return {
     opts = {
       suggestion = { enabled = true },
       panel = { enabled = false },
-    },
-  },
-
-  {
-    "yetone/avante.nvim",
-    build = "make",
-    cmd = "Copilot",
-    version = false,
-    opts = {
-      -- auto_suggestions_provider = "copilot",
-      provider = "openai",
-      providers = {
-        openai = {
-          endpoint = "https://api.openai.com/v1",
-          model = "o4-mini-2025-04-16",
-          timeout = 30000,
-          extra_request_body = {
-            temperature = 0.3,
-            max_completion_tokens = 8192,
-          },
-        },
-        copilot = {
-          model = "claude-sonnet-4",
-          timeout = 30000,
-          extra_request_body = {
-            temperature = 0.3,
-            max_tokens = 4096,
-          },
-        },
-        ollama = {
-          endpoint = "http://localhost:11434",
-          model = "qwen2.5-coder:7b",
-          timeout = 30000,
-          extra_request_body = {
-            temperature = 0.3,
-            max_tokens = 4096,
-          },
-        },
-      },
-      behaviour = {
-        auto_suggestions = false,
-        auto_set_highlight_group = true,
-        auto_set_keymaps = true,
-        auto_apply_diff_after_generation = false,
-        support_paste_from_clipboard = true,
-      },
-    },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "echasnovski/mini.pick",
-      "nvim-telescope/telescope.nvim",
-      "hrsh7th/nvim-cmp",
-      "ibhagwan/fzf-lua",
-      "stevearc/dressing.nvim",
-      "folke/snacks.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "zbirenbaum/copilot.lua",
-      {
-        "HakonHarnes/img-clip.nvim",
-        cmd = "Copilot",
-        opts = {
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
-            },
-            -- required for Windows users
-            use_absolute_path = true,
-          },
-        },
-      },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
     },
   },
 }
