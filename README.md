@@ -1,7 +1,131 @@
-## Toolset
+# dotfiles
+
+These dotfiles are built for day-to-day development, centered around Neovim, tmux, and zsh.
+The setup is designed to balance visual polish with practical speed, while staying easy to reproduce with minimal steps.
+
+![Neovim dashboard demo](assets/dashboard.gif)
+
+## Preview
+
+- Shell: `zsh` + `oh-my-zsh` + `powerlevel10k`
+- Editor: `neovim` + `lazy.nvim` + LSP + DAP
+- Terminal multiplexer: `tmux`
+- Dashboard animation: `terminaltexteffects (tte)` + `logo.txt`
+
+```text
+dashboard preview source: ./logo.txt
+```
+
+## Why This Repo
+
+- A complete Neovim setup including LSP, completion, and DAP
+- Startup UX with `dashboard.nvim`, including animated preview effects
+- Git workflow powered by `lazygit` + `delta`
+- Dependencies split into Required and Optional groups for gradual adoption
+
+## Requirements
+
+### Required
 
 - [git](https://git-scm.com/)
 - [neovim](https://neovim.io/)
-- [oh-my-zsh](http://ohmyz.sh/)
+- [Node.js](https://nodejs.org/) (`nvim-dap` php adapter / `copilot.lua`)
+- [oh-my-zsh](https://ohmyz.sh/)
+- [ripgrep](https://github.com/BurntSushi/ripgrep) (`fzf-lua` `live_grep`)
 - [tmux](https://github.com/tmux/tmux)
 - [zsh](https://www.zsh.org/)
+
+### Optional (Shell / Git UX)
+
+- [delta](https://github.com/dandavison/delta)
+- [fzf](https://github.com/junegunn/fzf)
+- [lazygit](https://github.com/jesseduffield/lazygit)
+- [docker](https://www.docker.com/) (manual install)
+- [powerlevel10k](https://github.com/romkatv/powerlevel10k) (manual install)
+
+### Optional (Neovim Feature Dependencies)
+
+- [terminaltexteffects (tte)](https://github.com/ChrisBuilds/terminaltexteffects) (`dashboard.nvim` preview)
+
+## Install
+
+This guide assumes you clone the repository to `$HOME/dotfiles`.
+
+```zsh
+git clone https://github.com/noir4y/dotfiles.git
+cd ~/dotfiles
+./install.sh
+```
+
+To install required dependencies at the same time (macOS + Homebrew):
+
+```zsh
+./install.sh --deps
+```
+
+Packages installed with `--deps`: `git`, `neovim`, `tmux`, `zsh`, `ripgrep`, `node`
+
+To include optional dependencies as well:
+
+```zsh
+./install.sh --optional
+```
+
+Additional packages installed with `--optional`: `delta`, `fzf`, `lazygit`
+(`docker` / `powerlevel10k` must be installed manually)
+
+`install.sh` creates links for:
+
+- `~/.zshrc`
+- `~/.p10k.zsh`
+- `~/.tmux.conf`
+- `~/.config/nvim`
+- `~/Library/Application Support/iTerm2/DynamicProfiles/iterm.json` (macOS only)
+
+Existing files are backed up by default. You can also run the linking commands manually if needed.
+
+```zsh
+ln -snf ~/dotfiles/zshrc ~/.zshrc
+ln -snf ~/dotfiles/p10k.zsh ~/.p10k.zsh
+ln -snf ~/dotfiles/tmux.conf ~/.tmux.conf
+ln -snf ~/dotfiles/iterm.json ~/Library/Application\ Support/iTerm2/DynamicProfiles/iterm.json
+mkdir -p ~/.config
+[ -e ~/.config/nvim ] || [ -L ~/.config/nvim ] && mv ~/.config/nvim ~/.config/nvim.backup.$(date +%Y%m%d_%H%M%S)
+ln -sfn ~/dotfiles/nvim ~/.config/nvim
+```
+
+Options:
+
+- `./install.sh --dry-run` (preview changes)
+- `./install.sh --force` (replace without backup)
+- `./install.sh --deps` (install required dependencies via Homebrew)
+- `./install.sh --optional` (install optional dependencies via Homebrew)
+
+## First Launch
+
+1. Launch `nvim` to trigger automatic plugin installation.
+2. Open `:Mason` and verify the language servers / formatters you need.
+3. Start `tmux` and confirm keybindings.
+4. Launch `lazygit` and check `delta` integration output.
+
+## Key Workflows
+
+- Files: `<leader>f`
+- Grep: `<leader>g`
+- Buffers: `<leader>b`
+- Git status picker: `<leader>e`
+- File tree toggle: `<leader>ft`
+- Window resize mode: `<leader>w`
+- DAP: `<F1>`..`<F5>`, `<F9>`, `<F10>`
+
+## Repository Layout
+
+- `zshrc`: zsh / oh-my-zsh / alias / fzf
+- `tmux.conf`: tmux keybind and pane behavior
+- `lazygit.yml`: lazygit + delta settings
+- `nvim/`: Neovim config (plugins, keymaps, LSP, DAP, dashboard)
+- `logo.txt`: dashboard preview source for `tte`
+
+## License
+
+[MIT](./LICENSE)
