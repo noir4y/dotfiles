@@ -28,18 +28,19 @@ dashboard preview source: ./logo.txt
 ### Required
 
 - [git](https://git-scm.com/)
+- [iTerm2](https://iterm2.com/) (manual install)
 - [neovim](https://neovim.io/)
 - [Node.js](https://nodejs.org/) (`nvim-dap` php adapter / `copilot.lua`)
 - [oh-my-zsh](https://ohmyz.sh/)
 - [ripgrep](https://github.com/BurntSushi/ripgrep) (`fzf-lua` `live_grep`)
+- [fzf](https://github.com/junegunn/fzf)
+- [lazygit](https://github.com/jesseduffield/lazygit)
+- [delta](https://github.com/dandavison/delta)
 - [tmux](https://github.com/tmux/tmux)
 - [zsh](https://www.zsh.org/)
 
 ### Optional (Shell / Git UX)
 
-- [delta](https://github.com/dandavison/delta)
-- [fzf](https://github.com/junegunn/fzf)
-- [lazygit](https://github.com/jesseduffield/lazygit)
 - [docker](https://www.docker.com/) (manual install)
 - [powerlevel10k](https://github.com/romkatv/powerlevel10k) (manual install)
 
@@ -49,7 +50,7 @@ dashboard preview source: ./logo.txt
 
 ## Install
 
-This guide assumes you clone the repository to `$HOME/dotfiles`.
+This guide uses `$HOME/dotfiles` as an example path (the installer works from any clone location).
 
 ```zsh
 git clone https://github.com/noir4y/dotfiles.git
@@ -63,7 +64,8 @@ To install required dependencies at the same time (macOS + Homebrew):
 ./install.sh --deps
 ```
 
-Packages installed with `--deps`: `git`, `neovim`, `tmux`, `zsh`, `ripgrep`, `node`
+Packages installed with `--deps`: `git`, `neovim`, `tmux`, `zsh`, `ripgrep`, `node`, `fzf`, `lazygit`, `delta`
+(`iTerm2` is required but must be installed manually)
 
 To include optional dependencies as well:
 
@@ -71,7 +73,7 @@ To include optional dependencies as well:
 ./install.sh --optional
 ```
 
-Additional packages installed with `--optional`: `delta`, `fzf`, `lazygit`
+Additional packages installed with `--optional`: none (only manual-install tools remain optional)
 (`docker` / `powerlevel10k` must be installed manually)
 
 `install.sh` creates links for:
@@ -80,17 +82,21 @@ Additional packages installed with `--optional`: `delta`, `fzf`, `lazygit`
 - `~/.p10k.zsh`
 - `~/.tmux.conf`
 - `~/.config/nvim`
-- `~/Library/Application Support/iTerm2/DynamicProfiles/iterm.json` (macOS only)
 
 Existing files are backed up by default. You can also run the linking commands manually if needed.
 
 ```zsh
-ln -snf ~/dotfiles/zshrc ~/.zshrc
-ln -snf ~/dotfiles/p10k.zsh ~/.p10k.zsh
-ln -snf ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -snf ~/dotfiles/iterm.json ~/Library/Application\ Support/iTerm2/DynamicProfiles/iterm.json
-mkdir -p ~/.config
-[ -e ~/.config/nvim ] || [ -L ~/.config/nvim ] && mv ~/.config/nvim ~/.config/nvim.backup.$(date +%Y%m%d_%H%M%S)
+BACKUP_DIR="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$BACKUP_DIR" "$HOME/.config"
+
+[ -e "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ] && mv "$HOME/.zshrc" "$BACKUP_DIR/.zshrc"
+[ -e "$HOME/.p10k.zsh" ] || [ -L "$HOME/.p10k.zsh" ] && mv "$HOME/.p10k.zsh" "$BACKUP_DIR/.p10k.zsh"
+[ -e "$HOME/.tmux.conf" ] || [ -L "$HOME/.tmux.conf" ] && mv "$HOME/.tmux.conf" "$BACKUP_DIR/.tmux.conf"
+[ -e "$HOME/.config/nvim" ] || [ -L "$HOME/.config/nvim" ] && mv "$HOME/.config/nvim" "$BACKUP_DIR/nvim"
+
+ln -sfn ~/dotfiles/zshrc ~/.zshrc
+ln -sfn ~/dotfiles/p10k.zsh ~/.p10k.zsh
+ln -sfn ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -sfn ~/dotfiles/nvim ~/.config/nvim
 ```
 
@@ -103,10 +109,12 @@ Options:
 
 ## First Launch
 
-1. Launch `nvim` to trigger automatic plugin installation.
-2. Open `:Mason` and verify the language servers / formatters you need.
-3. Start `tmux` and confirm keybindings.
-4. Launch `lazygit` and check `delta` integration output.
+1. Import `~/dotfiles/iterm.json` in iTerm2 (`Settings > Profiles > Other Actions... > Import JSON Profiles...`).
+2. (Optional) Install `terminaltexteffects (tte)` if you want animated dashboard logo output.
+3. Launch `nvim` to trigger automatic plugin installation.
+4. Open `:Mason` and verify the language servers / formatters you need.
+5. Start `tmux` and confirm keybindings.
+6. Launch `lazygit` and check `delta` integration output.
 
 ## Key Workflows
 

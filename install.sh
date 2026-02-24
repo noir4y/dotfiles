@@ -92,12 +92,9 @@ install_deps_with_brew() {
     zsh
     ripgrep
     node
-  )
-
-  local optional_packages=(
-    delta
     fzf
     lazygit
+    delta
   )
 
   local pkg
@@ -106,9 +103,7 @@ install_deps_with_brew() {
   done
 
   if [ "$INSTALL_OPTIONAL_DEPS" = true ]; then
-    for pkg in "${optional_packages[@]}"; do
-      run brew install "$pkg"
-    done
+    log "No additional optional Homebrew packages configured."
   fi
 
   if [ "$INSTALL_OPTIONAL_DEPS" = true ]; then
@@ -156,12 +151,6 @@ link_file "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
 link_file "$DOTFILES_DIR/p10k.zsh" "$HOME/.p10k.zsh"
 link_file "$DOTFILES_DIR/tmux.conf" "$HOME/.tmux.conf"
 link_file "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
-
-if [ "$(uname -s)" = "Darwin" ]; then
-  link_file "$DOTFILES_DIR/iterm.json" "$HOME/Library/Application Support/iTerm2/DynamicProfiles/iterm.json"
-else
-  log "Skip iTerm profile link (non-macOS)"
-fi
 
 if [ "$DRY_RUN" = true ]; then
   log "Dry-run completed."

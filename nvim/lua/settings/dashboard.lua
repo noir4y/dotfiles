@@ -126,7 +126,7 @@ require('dashboard').setup({
     winbar = true,
   },
   preview = {
-    command = [[sh -c 'cat "$0" | tte beams --beam-row-symbols ☆ ･ ･ --beam-column-symbols ☆ ･ ･; while :; do sleep 3600; done']],
+    command = [[sh -c 'if command -v tte >/dev/null 2>&1; then cat "$0" | tte beams --beam-row-symbols ☆ ･ ･ --beam-column-symbols ☆ ･ ･; else cat "$0"; fi; while :; do sleep 3600; done']],
     file_path = vim.fn.expand('~/dotfiles/logo.txt'),
     file_width = 56,
     file_height = 8,
