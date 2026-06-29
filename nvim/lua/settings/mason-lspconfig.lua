@@ -9,6 +9,10 @@ mason.setup({
   },
 })
 
+mason_lspconfig.setup({
+  ensure_installed = { "lua_ls", "ts_ls", "intelephense" },
+})
+
 local capabilities = cmp_nvim_lsp.default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local function common_on_attach(client, bufnr)
@@ -18,7 +22,7 @@ local function common_on_attach(client, bufnr)
   end
 end
 
-vim.lsp.config["lua_ls"] = {
+vim.lsp.config("lua_ls", {
   capabilities = capabilities,
   on_attach = common_on_attach,
   settings = {
@@ -28,9 +32,9 @@ vim.lsp.config["lua_ls"] = {
       },
     },
   },
-}
+})
 
-vim.lsp.config["intelephense"] = {
+vim.lsp.config("intelephense", {
   capabilities = capabilities,
   on_attach = common_on_attach,
   settings = {
@@ -40,9 +44,8 @@ vim.lsp.config["intelephense"] = {
       },
     },
   },
-}
-
-mason_lspconfig.setup({
-  ensure_installed = { "lua_ls", "intelephense" },
-  automatic_enable = true,
 })
+
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("ts_ls")
+vim.lsp.enable("intelephense")

@@ -39,8 +39,6 @@ else
   map("n", "gn", "<cmd>lua vim.lsp.buf.rename()<CR>", opt)
   map("n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opt)
   map("n", "ge", "<cmd>lua vim.diagnostic.open_float()<CR>", opt)
-  map("n", "<leader>)", "<cmd>lua vim.diagnostic.goto_next()<CR>", opt)
-  map("n", "<leader>(", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opt)
 
   -- fzf
   vim.cmd([[
