@@ -88,7 +88,7 @@ install_deps_with_brew() {
   local required_packages=(
     git
     neovim
-    tmux
+    herdr
     zsh
     ripgrep
     node
@@ -149,7 +149,7 @@ fi
 
 link_file "$DOTFILES_DIR/zshrc" "$HOME/.zshrc"
 link_file "$DOTFILES_DIR/p10k.zsh" "$HOME/.p10k.zsh"
-link_file "$DOTFILES_DIR/tmux.conf" "$HOME/.tmux.conf"
+link_file "$DOTFILES_DIR/herdr.toml" "$HOME/.config/herdr/config.toml"
 link_file "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
 
 if [ "$DRY_RUN" = true ]; then

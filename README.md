@@ -1,6 +1,6 @@
 # dotfiles
 
-These dotfiles are built for day-to-day development, centered around Neovim, tmux, and zsh.
+These dotfiles are built for day-to-day development, centered around Neovim, Herdr, and zsh.
 The setup is designed to balance visual polish with practical speed, while staying easy to reproduce with minimal steps.
 
 ![Neovim dashboard demo](assets/dashboard.gif)
@@ -9,7 +9,7 @@ The setup is designed to balance visual polish with practical speed, while stayi
 
 - Shell: `zsh` + `oh-my-zsh` + `powerlevel10k`
 - Editor: `neovim` + `lazy.nvim` + LSP + DAP
-- Terminal multiplexer: `tmux`
+- Terminal workspace manager: `herdr`
 - Dashboard animation: `terminaltexteffects (tte)` + `logo.txt`
 
 ```text
@@ -36,7 +36,7 @@ dashboard preview source: ./logo.txt
 - [fzf](https://github.com/junegunn/fzf)
 - [lazygit](https://github.com/jesseduffield/lazygit)
 - [delta](https://github.com/dandavison/delta)
-- [tmux](https://github.com/tmux/tmux)
+- [Herdr](https://herdr.dev/)
 - [zsh](https://www.zsh.org/)
 
 ### Optional (Shell / Git UX)
@@ -64,7 +64,7 @@ To install required dependencies at the same time (macOS + Homebrew):
 ./install.sh --deps
 ```
 
-Packages installed with `--deps`: `git`, `neovim`, `tmux`, `zsh`, `ripgrep`, `node`, `fzf`, `lazygit`, `delta`
+Packages installed with `--deps`: `git`, `neovim`, `herdr`, `zsh`, `ripgrep`, `node`, `fzf`, `lazygit`, `delta`
 (`iTerm2` is required but must be installed manually)
 
 To include optional dependencies as well:
@@ -80,7 +80,7 @@ Additional packages installed with `--optional`: none (only manual-install tools
 
 - `~/.zshrc`
 - `~/.p10k.zsh`
-- `~/.tmux.conf`
+- `~/.config/herdr/config.toml`
 - `~/.config/nvim`
 
 Existing files are backed up by default. You can also run the linking commands manually if needed.
@@ -91,12 +91,13 @@ mkdir -p "$BACKUP_DIR" "$HOME/.config"
 
 [ -e "$HOME/.zshrc" ] || [ -L "$HOME/.zshrc" ] && mv "$HOME/.zshrc" "$BACKUP_DIR/.zshrc"
 [ -e "$HOME/.p10k.zsh" ] || [ -L "$HOME/.p10k.zsh" ] && mv "$HOME/.p10k.zsh" "$BACKUP_DIR/.p10k.zsh"
-[ -e "$HOME/.tmux.conf" ] || [ -L "$HOME/.tmux.conf" ] && mv "$HOME/.tmux.conf" "$BACKUP_DIR/.tmux.conf"
+[ -e "$HOME/.config/herdr/config.toml" ] || [ -L "$HOME/.config/herdr/config.toml" ] && mv "$HOME/.config/herdr/config.toml" "$BACKUP_DIR/herdr.toml"
 [ -e "$HOME/.config/nvim" ] || [ -L "$HOME/.config/nvim" ] && mv "$HOME/.config/nvim" "$BACKUP_DIR/nvim"
 
 ln -sfn ~/dotfiles/zshrc ~/.zshrc
 ln -sfn ~/dotfiles/p10k.zsh ~/.p10k.zsh
-ln -sfn ~/dotfiles/tmux.conf ~/.tmux.conf
+mkdir -p ~/.config/herdr
+ln -sfn ~/dotfiles/herdr.toml ~/.config/herdr/config.toml
 ln -sfn ~/dotfiles/nvim ~/.config/nvim
 ```
 
@@ -113,7 +114,7 @@ Options:
 2. (Optional) Install `terminaltexteffects (tte)` if you want animated dashboard logo output.
 3. Launch `nvim` to trigger automatic plugin installation.
 4. Open `:Mason` and verify the language servers / formatters you need.
-5. Start `tmux` and confirm keybindings.
+5. Start `herdr` and confirm keybindings.
 6. Launch `lazygit` and check `delta` integration output.
 
 ## Key Workflows
@@ -129,7 +130,7 @@ Options:
 ## Repository Layout
 
 - `zshrc`: zsh / oh-my-zsh / alias / fzf
-- `tmux.conf`: tmux keybind and pane behavior
+- `herdr.toml`: Herdr theme, keybind, and pane behavior
 - `lazygit.yml`: lazygit + delta settings
 - `nvim/`: Neovim config (plugins, keymaps, LSP, DAP, dashboard)
 - `logo.txt`: dashboard preview source for `tte`
